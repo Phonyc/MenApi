@@ -2,9 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import unidecode
 import datetime
-
+import urllib.parse
 class MenApi:
-    def __init__(self, base_url='https://hoche.thewebanswer.net/d%C3%A9jeuners/semaines') -> None:
+    def __init__(self, base_url='https://hoche.thewebanswer.net/') -> None:
         self.base_url = base_url
         self.corresp = {
             'janvier': '01',
@@ -21,12 +21,13 @@ class MenApi:
             'decembre': '12',
         }
 
-    def get_page(self, date: datetime.datetime) -> str:
-        req = requests.get(self.base_url + f'/{date.year}-{date.month}-{date.day}')
+    def get_page(self, date: datetime.datetime, moment='diners') -> str:
+
+        req = requests.get(self.base_url + urllib.parse.quote(f'{moment}/semaines/{date.year}-{date.month}-{date.day}'))
         return req.text
     
-    def get_at_date(self, date: datetime.datetime) -> list[str]:
-        page_bs4 = BeautifulSoup(self.get_page(date), 'html.parser')
+    def parse_text(self, content: str, date: datetime.datetime) -> list[str]:
+        page_bs4 = BeautifulSoup(content, 'html.parser')
         page_bs4.body.main.section.h2.contents[0].split('du')[1].split('au')
         dates_semaines = page_bs4.body.main.section.h2.contents[0].split('du')[1].split('au')
         
@@ -46,6 +47,12 @@ class MenApi:
 
         return menu
 
+    def get_at_date_midi(self, date: datetime.datetime) -> list[str]:
+        return self.parse_text(self.get_page(date, moment='déjeuners'), date)
+    
+    def get_at_date_soir(self, date: datetime.datetime) -> list[str]:
+        return self.parse_text(self.get_page(date, moment='diners'), date)
 
-client = MenApi()
-print(client.get_at_date(datetime.datetime(2023, 11, 15)))
+# client = MenApi()
+# print(client.get_at_date_midi(datetime.datetime(2023, 11, 10)))
+# print(client.get_at_date_soir(datetime.datetime(2023, 11, 10)))
