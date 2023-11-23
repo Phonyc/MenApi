@@ -38,8 +38,11 @@ class MenApi:
         for tr in page_bs4.body.main.find('table').tbody.findAll('tr'):
             poss = ''
             try:
-                for posibilite in tr.findAll('td')[num_item].findAll('span'):
+                for posibilite in tr.findAll('td')[num_item].findAll('p'):
                     poss += posibilite.text.strip() + ' / '
+                if poss == '':
+                    for posibilite in tr.findAll('td')[num_item].findAll('span'):
+                        poss += posibilite.text.strip() + ' / '
                 menu.append(poss[:-3])
             except IndexError:
                 pass
