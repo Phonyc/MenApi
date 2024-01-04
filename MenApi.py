@@ -56,3 +56,4 @@ class MenApi:
 
     get_at_date_soir = diners
     get_at_date_midi = dejeuners
+
