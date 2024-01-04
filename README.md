@@ -1,7 +1,7 @@
 # MenApi
 Pour obtenir les menus des repas du Lycée Hoche
 
-### MenApi(base_url='https://hoche.thewebanswer.net/d%C3%A9jeuners/semaines') -> None
+### MenApi(base_url='https://hoche.thewebanswer.net/') -> None
 
 
 ### MenApi().get_at_date_midi(date: datetime.datetime) -> list[str]
