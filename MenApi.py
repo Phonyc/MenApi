@@ -54,8 +54,5 @@ class MenApi:
     def dejeuners(self, date: datetime.datetime) -> list[str]:
         return self.parse_text(self.get_page(date, moment='dejeuners'), date)
 
-    def get_at_date_soir(self, date: datetime.datetime) -> list[str]:
-        return self.parse_text(self.get_page(date, moment='diners'), date)
-
-    def get_at_date_midi(self, date: datetime.datetime) -> list[str]:
-        return self.parse_text(self.get_page(date, moment='dejeuners'), date)
+    get_at_date_soir = diners
+    get_at_date_midi = dejeuners
