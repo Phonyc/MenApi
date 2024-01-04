@@ -19,7 +19,7 @@ Retourne une liste vide si le jour n'est pas dans le menu.
 ## Exemple
 ```Python
 >>> client = MenApi()
->>> client.get_at_date_midi(datetime.datetime(2023, 12, 12))
+>>> client.dejeuners(datetime.datetime(2023, 12, 12))
 ['Entrée', 'Plat', 'Accompagnement', 'Laitage', 'Dessert']
 ``` 
 
